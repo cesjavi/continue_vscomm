@@ -330,6 +330,11 @@ const getCommandsMap: (
         void addHighlightedCodeToContext(sidebar.webviewProtocol);
       }
     },
+    "continue.askSelection": async () => {
+      focusGUI();
+      await addHighlightedCodeToContext(sidebar.webviewProtocol);
+      void sidebar.webviewProtocol.request("focusContinueInputWithoutClear");
+    },
     // QuickEditShowParams are passed from CodeLens, temp fix
     // until we update to new params specific to Edit
     "continue.focusEdit": async (args?: QuickEditShowParams) => {
