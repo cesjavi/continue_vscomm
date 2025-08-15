@@ -34,6 +34,7 @@ namespace Continue.VisualStudio
                     UseShellExecute = false,
                     CreateNoWindow = true
                 };
+
                 using var proc = Process.Start(psi);
                 if (proc != null)
                 {

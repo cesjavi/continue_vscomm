@@ -1,0 +1,16 @@
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011">
+  <Metadata>
+    <Identity Id="Continue.VisualStudio" Version="0.0.1" Language="en-US" Publisher="Continue" />
+    <DisplayName>Continue for Visual Studio</DisplayName>
+    <Description xml:space="preserve">Minimal Visual Studio extension for Continue.</Description>
+  </Metadata>
+  <Installation>
+    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0,18.0)" />
+  </Installation>
+  <Dependencies>
+    <Dependency Id="Microsoft.Framework.NDP" DisplayName=".NET Framework" Version="[4.5,)" />
+  </Dependencies>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.VsPackage" Path="Continue.VisualStudio.pkgdef" />
+  </Assets>
+</PackageManifest>
