@@ -1,22 +1,43 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <!-- VSIX in-proc: usar .NET Framework, no net6 -->
+    <TargetFramework>net472</TargetFramework>
+    <LangVersion>8.0</LangVersion>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
-    <Nullable>enable</Nullable>
-    <AssemblyName>Continue.VisualStudio</AssemblyName>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+
+    <!-- Empaquetado VSIX -->
+    <CreateVsixContainer>true</CreateVsixContainer>
+    <IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
+
+    <!-- F5: levantar VS en instancia experimental -->
+    <StartAction>Program</StartAction>
+    <StartProgram>$(DevEnvDir)devenv.exe</StartProgram>
+    <StartArguments>/rootsuffix Exp</StartArguments>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <!-- o portable -->
+    <IncludeDebugSymbolsInVSIXContainer>true</IncludeDebugSymbolsInVSIXContainer>
+    <IncludeSourceInVSIXContainer>true</IncludeSourceInVSIXContainer>
+    <!-- opcional -->
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.0.0" ExcludeAssets="runtime" />
     <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.0.5238" PrivateAssets="all" />
   </ItemGroup>
+
   <ItemGroup>
     <Compile Remove="node/**" />
   </ItemGroup>
+
   <ItemGroup>
-    <Content Include="source.extension.vsixmanifest">
-      <SubType>Designer</SubType>
-    </Content>
+    <!-- El manifest debe ser de tipo Vsix, no solo Content -->
+    <Vsix Include="source.extension.vsixmanifest">
+      <Generator>VsixManifestGenerator</Generator>
+    </Vsix>
+
     <Content Include="node/out/**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

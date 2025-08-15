@@ -6,12 +6,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.VisualStudio.Threading;
 
 namespace Continue.VisualStudio
 {
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [InstalledProductRegistration("Continue", "Continue for Visual Studio", "0.0.1")]
     [Guid(PackageGuidString)]
+    [ProvideAutoLoad(UIContextGuids80.SolutionExists, PackageAutoLoadFlags.BackgroundLoad)]
+
     public sealed class ContinuePackage : AsyncPackage
     {
         public const string PackageGuidString = "72f4ce0c-6689-4e79-b6d3-7e2930c2faba";
@@ -50,6 +53,15 @@ namespace Continue.VisualStudio
                 OLEMSGICON.OLEMSGICON_INFO,
                 OLEMSGBUTTON.OLEMSGBUTTON_OK,
                 OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
+            VsShellUtilities.ShowMessageBox(
+                this,
+                $"Continue cargada.\nNode dijo: {output}",
+                "Continue for Visual Studio",
+                OLEMSGICON.OLEMSGICON_INFO,
+                OLEMSGBUTTON.OLEMSGBUTTON_OK,
+                OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+
         }
     }
 }
