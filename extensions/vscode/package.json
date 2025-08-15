@@ -194,6 +194,12 @@
         "group": "Continue"
       },
       {
+        "command": "continue.askSelection",
+        "category": "Continue",
+        "title": "Preguntar a Continue sobre la selección",
+        "group": "Continue"
+      },
+      {
         "command": "continue.debugTerminal",
         "category": "Continue",
         "title": "Debug Terminal",
@@ -510,6 +516,11 @@
         }
       ],
       "editor/context": [
+        {
+          "command": "continue.askSelection",
+          "group": "0_acontinue",
+          "when": "editorHasSelection"
+        },
         {
           "submenu": "continue.continueSubMenu",
           "group": "0_acontinue"
